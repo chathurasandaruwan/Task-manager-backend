@@ -74,4 +74,19 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //delete task
+    @DeleteMapping(value = "/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable String taskId){
+        try {
+            //call service layer
+            System.out.println(taskId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (TaskNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
