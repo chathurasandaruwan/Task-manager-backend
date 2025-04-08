@@ -1,5 +1,6 @@
-package lk.ijse.Task_manager_backend.dto;
+package lk.ijse.Task_manager_backend.dto.impl;
 
+import lk.ijse.Task_manager_backend.dto.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDTO implements Serializable {
+public class TaskDTO implements TaskStatus {
     private String id;
     private String title;
     private String description;
