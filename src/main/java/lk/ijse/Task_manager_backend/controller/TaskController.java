@@ -1,13 +1,14 @@
 package lk.ijse.Task_manager_backend.controller;
 
-import lk.ijse.Task_manager_backend.dto.TaskDTO;
+import lk.ijse.Task_manager_backend.customStatusCode.SelectedTasckErrorStatus;
+import lk.ijse.Task_manager_backend.dto.TaskStatus;
+import lk.ijse.Task_manager_backend.dto.impl.TaskDTO;
 import lk.ijse.Task_manager_backend.exeption.DataPersistException;
 import lk.ijse.Task_manager_backend.exeption.TaskNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -87,6 +88,18 @@ public class TaskController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //get task by id
+    @GetMapping(value = "/{taskId}")
+    public TaskStatus getTaskById(@PathVariable String taskId){
+        try {
+            //call service layer
+            System.out.println(taskId);
+            return new SelectedTasckErrorStatus(0, "Task Found");
+        }catch (TaskNotFoundException e){
+            e.printStackTrace();
+            return new SelectedTasckErrorStatus(1, "Task Not Found");
         }
     }
 }
