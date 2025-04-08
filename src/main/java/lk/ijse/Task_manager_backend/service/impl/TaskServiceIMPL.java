@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,7 +36,12 @@ public class TaskServiceIMPL implements TaskService {
 
     @Override
     public void deleteTask(String taskId) {
-
+        Optional<TaskEntity> byId = taskDAO.findById(taskId);
+        if (!byId.isPresent()) {
+            throw new RuntimeException("Task not found");
+        }else {
+            taskDAO.deleteById(taskId);
+        }
     }
 
     @Override
