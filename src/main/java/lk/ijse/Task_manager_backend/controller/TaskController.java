@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/task")
@@ -38,4 +40,10 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //getAll tasks
+    @GetMapping(value = "/getAllTasks",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TaskDTO> getAllTasks(){
+        return null;
+    }
+
 }
