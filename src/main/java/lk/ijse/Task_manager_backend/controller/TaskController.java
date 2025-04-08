@@ -5,6 +5,8 @@ import lk.ijse.Task_manager_backend.dto.TaskStatus;
 import lk.ijse.Task_manager_backend.dto.impl.TaskDTO;
 import lk.ijse.Task_manager_backend.exeption.DataPersistException;
 import lk.ijse.Task_manager_backend.exeption.TaskNotFoundException;
+import lk.ijse.Task_manager_backend.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/task")
 public class TaskController {
+    @Autowired
+    private TaskService taskService;
     //save task
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTask(
@@ -33,7 +37,7 @@ public class TaskController {
             taskDTO.setCreatedAt(createdAt);
             taskDTO.setUpdatedAt(updatedAt);
             //call service layer
-            System.out.println(taskDTO);
+            taskService.saveTask(taskDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +49,7 @@ public class TaskController {
     //getAll tasks
     @GetMapping(value = "/getAllTasks",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TaskDTO> getAllTasks(){
-        return null;
+        return taskService.getAllTasks();
     }
 
     //update task
@@ -65,7 +69,7 @@ public class TaskController {
             taskDTO.setCreatedAt(createdAt);
             taskDTO.setUpdatedAt(updatedAt);
             //call service layer
-            System.out.println(taskDTO+" "+taskId);
+            taskService.updateTask(taskId,taskDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (TaskNotFoundException e){
             e.printStackTrace();
@@ -80,7 +84,7 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable String taskId){
         try {
             //call service layer
-            System.out.println(taskId);
+            taskService.deleteTask(taskId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (TaskNotFoundException e){
             e.printStackTrace();
@@ -95,8 +99,7 @@ public class TaskController {
     public TaskStatus getTaskById(@PathVariable String taskId){
         try {
             //call service layer
-            System.out.println(taskId);
-            return new SelectedTasckErrorStatus(0, "Task Found");
+            return taskService.getSelectedTaskById(taskId);
         }catch (TaskNotFoundException e){
             e.printStackTrace();
             return new SelectedTasckErrorStatus(1, "Task Not Found");
