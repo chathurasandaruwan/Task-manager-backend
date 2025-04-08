@@ -51,6 +51,11 @@ public class TaskServiceIMPL implements TaskService {
 
     @Override
     public TaskDTO getSelectedTaskById(String id) {
-        return null;
+        Optional<TaskEntity> byId = taskDAO.findById(id);
+        if (!byId.isPresent()) {
+            throw new RuntimeException("Task not found");
+        }else {
+            return mapping.toTaskDTO(byId.get());
+        }
     }
 }
