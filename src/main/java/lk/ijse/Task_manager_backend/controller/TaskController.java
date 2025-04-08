@@ -2,6 +2,7 @@ package lk.ijse.Task_manager_backend.controller;
 
 import lk.ijse.Task_manager_backend.dto.TaskDTO;
 import lk.ijse.Task_manager_backend.exeption.DataPersistException;
+import lk.ijse.Task_manager_backend.exeption.TaskNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/task")
 public class TaskController {
     //save task
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTask(
             @RequestPart("title") String title,
             @RequestPart("description")String description,
@@ -46,4 +47,31 @@ public class TaskController {
         return null;
     }
 
+    //update task
+    @PutMapping(value = "/{taskId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateTask(
+            @RequestPart("title") String title,
+            @RequestPart("description")String description,
+            @RequestPart("status") String status,
+            @RequestPart("createdAt")String createdAt,
+            @RequestPart("updatedAt") String updatedAt,
+            @PathVariable String taskId){
+        try {
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.setTitle(title);
+            taskDTO.setDescription(description);
+            taskDTO.setStatus(status);
+            taskDTO.setCreatedAt(createdAt);
+            taskDTO.setUpdatedAt(updatedAt);
+            //call service layer
+            System.out.println(taskDTO+" "+taskId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (TaskNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
