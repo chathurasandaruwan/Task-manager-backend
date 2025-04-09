@@ -6,7 +6,6 @@ import lk.ijse.Task_manager_backend.secure.JWTAuthResponse;
 import lk.ijse.Task_manager_backend.secure.SignIn;
 import lk.ijse.Task_manager_backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
