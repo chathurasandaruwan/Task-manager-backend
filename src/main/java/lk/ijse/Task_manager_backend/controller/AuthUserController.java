@@ -41,8 +41,13 @@ public class AuthUserController {
     @PostMapping(value = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JWTAuthResponse> signIn(@RequestBody SignIn signIn) {
         System.out.println(signIn);
-        //todo: call service layer
-        return null;
+        // call service layer
+        return ResponseEntity.ok(authService.signIn(signIn));
+    }
+    //refresh token
+    @PostMapping("refresh")
+    public ResponseEntity<JWTAuthResponse> Token(@RequestParam("refreshToken") String refreshToken) {
+        return ResponseEntity.ok(authService.refreshToken(refreshToken));
     }
 
 }
