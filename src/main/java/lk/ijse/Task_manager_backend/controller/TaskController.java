@@ -40,9 +40,9 @@ public class TaskController {
     }
 
     //getAll tasks
-    @GetMapping(value = "/getAllTasks", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TaskDTO> getAllTasks() {
-        return taskService.getAllTasks();
+    @GetMapping(value = "/getAllTasks/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TaskDTO> getAllTasks(@PathVariable String userId) {
+        return taskService.getAllTasks(userId);
     }
 
     //update task

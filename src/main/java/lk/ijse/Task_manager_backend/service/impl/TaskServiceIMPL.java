@@ -30,8 +30,8 @@ public class TaskServiceIMPL implements TaskService {
     }
 
     @Override
-    public List<TaskDTO> getAllTasks() {
-        return mapping.asTaskDTOList(taskDAO.findAll());
+    public List<TaskDTO> getAllTasks(String userId) {
+        return mapping.asTaskDTOList(taskDAO.findByUserUserId(userId));
     }
 
     @Override

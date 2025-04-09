@@ -15,4 +15,5 @@ public class TaskDTO implements TaskStatus {
     private String status;
     private String createdAt;
     private String updatedAt;
+    private String userId;
 }
