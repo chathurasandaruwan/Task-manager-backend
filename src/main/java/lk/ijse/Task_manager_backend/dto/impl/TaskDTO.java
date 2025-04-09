@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskDTO implements TaskStatus {
-    private String taskId;
+    private String taskId ;
     private String title;
     private String description;
     private String status;

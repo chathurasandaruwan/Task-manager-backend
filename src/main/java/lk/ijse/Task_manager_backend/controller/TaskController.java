@@ -22,20 +22,10 @@ public class TaskController {
     private TaskService taskService;
     //save task
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveTask(
-            @RequestPart("title") String title,
-            @RequestPart("description")String description,
-            @RequestPart("status") String status,
-            @RequestPart("createdAt")String createdAt,
-            @RequestPart("updatedAt") String updatedAt
-    ){
+    public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO){
+        System.out.println(taskDTO);
+        taskDTO.setTaskId("TID-002");
         try {
-            TaskDTO taskDTO = new TaskDTO();
-            taskDTO.setTitle(title);
-            taskDTO.setDescription(description);
-            taskDTO.setStatus(status);
-            taskDTO.setCreatedAt(createdAt);
-            taskDTO.setUpdatedAt(updatedAt);
             //call service layer
             taskService.saveTask(taskDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
