@@ -6,6 +6,7 @@ import lk.ijse.Task_manager_backend.dto.impl.TaskDTO;
 import lk.ijse.Task_manager_backend.exeption.DataPersistException;
 import lk.ijse.Task_manager_backend.exeption.TaskNotFoundException;
 import lk.ijse.Task_manager_backend.service.TaskService;
+import lk.ijse.Task_manager_backend.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +25,8 @@ public class TaskController {
     //save task
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO) {
-        System.out.println(taskDTO);
-        taskDTO.setTaskId("TID-002");
+        String id = AppUtil.generateTaskId();
+        taskDTO.setTaskId(id);
         try {
             //call service layer
             taskService.saveTask(taskDTO);
