@@ -3,6 +3,7 @@ package lk.ijse.Task_manager_backend.controller;
 import lk.ijse.Task_manager_backend.dto.impl.UserDTO;
 import lk.ijse.Task_manager_backend.exeption.DataPersistException;
 import lk.ijse.Task_manager_backend.secure.JWTAuthResponse;
+import lk.ijse.Task_manager_backend.secure.SignIn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class AuthUserController {
+    //signup
     @PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JWTAuthResponse> saveUser(@RequestBody UserDTO userDTO) {
         try {
@@ -30,6 +32,13 @@ public class AuthUserController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    //login
+    @PostMapping(value = "signin",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<JWTAuthResponse> signIn(@RequestBody SignIn signIn){
+        System.out.println(signIn);
+        //todo: call service layer
+        return null;
     }
 
 }
