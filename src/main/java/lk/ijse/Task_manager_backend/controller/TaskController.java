@@ -20,77 +20,71 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private TaskService taskService;
+
     //save task
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO){
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO) {
         System.out.println(taskDTO);
         taskDTO.setTaskId("TID-002");
         try {
             //call service layer
             taskService.saveTask(taskDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (DataPersistException e){
+        } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //getAll tasks
-    @GetMapping(value = "/getAllTasks",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TaskDTO> getAllTasks(){
+    @GetMapping(value = "/getAllTasks", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TaskDTO> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     //update task
-    @PutMapping(value = "/{taskId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{taskId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateTask(
-            @RequestPart("title") String title,
-            @RequestPart("description")String description,
-            @RequestPart("status") String status,
-            @RequestPart("createdAt")String createdAt,
-            @RequestPart("updatedAt") String updatedAt,
-            @PathVariable String taskId){
+            @RequestBody TaskDTO taskDTO,
+            @PathVariable String taskId) {
         try {
-            TaskDTO taskDTO = new TaskDTO();
-            taskDTO.setTitle(title);
-            taskDTO.setDescription(description);
-            taskDTO.setStatus(status);
-            taskDTO.setCreatedAt(createdAt);
-            taskDTO.setUpdatedAt(updatedAt);
             //call service layer
-            taskService.updateTask(taskId,taskDTO);
+            taskService.updateTask(taskId, taskDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (TaskNotFoundException e){
+        } catch (TaskNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //delete task
     @DeleteMapping(value = "/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable String taskId){
+    public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
         try {
             //call service layer
             taskService.deleteTask(taskId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (TaskNotFoundException e){
+        } catch (TaskNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //get task by id
     @GetMapping(value = "/{taskId}")
-    public TaskStatus getTaskById(@PathVariable String taskId){
+    public TaskStatus getTaskById(@PathVariable String taskId) {
         try {
             //call service layer
             return taskService.getSelectedTaskById(taskId);
-        }catch (TaskNotFoundException e){
+        } catch (TaskNotFoundException e) {
             e.printStackTrace();
             return new SelectedTasckErrorStatus(1, "Task Not Found");
         }
