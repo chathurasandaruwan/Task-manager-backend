@@ -28,7 +28,7 @@ cd Task-manager-backend
 4. Build the Application Using Gradle
    ```bash
    ./gradlew build
-```
+   ```
 5. Run the Application
 ```bash
    java -jar build/libs/Task-manager-backend.jar
