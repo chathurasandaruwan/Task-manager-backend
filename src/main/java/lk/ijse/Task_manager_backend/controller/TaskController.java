@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/task")
@@ -24,13 +25,14 @@ public class TaskController {
 
     //save task
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> saveTask(@RequestBody TaskDTO taskDTO) {
         String id = AppUtil.generateTaskId();
         taskDTO.setTaskId(id);
+        System.out.println(id);
         try {
             //call service layer
-            taskService.saveTask(taskDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            TaskDTO newTask =taskService.saveTask(taskDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
         } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

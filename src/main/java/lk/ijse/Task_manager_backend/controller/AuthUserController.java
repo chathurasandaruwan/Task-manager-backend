@@ -5,6 +5,7 @@ import lk.ijse.Task_manager_backend.exeption.DataPersistException;
 import lk.ijse.Task_manager_backend.secure.JWTAuthResponse;
 import lk.ijse.Task_manager_backend.secure.SignIn;
 import lk.ijse.Task_manager_backend.service.AuthService;
+import lk.ijse.Task_manager_backend.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ public class AuthUserController {
     @PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JWTAuthResponse> saveUser(@RequestBody UserDTO userDTO) {
         try {
+            userDTO.setUserId(AppUtil.generateUserId());
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             // call service layer
             return ResponseEntity.ok(authService.signUp(userDTO));

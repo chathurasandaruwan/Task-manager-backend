@@ -6,4 +6,7 @@ public class AppUtil {
     public static String generateTaskId() {
         return "TID-"+ UUID.randomUUID();
     }
+    public static String generateUserId() {
+        return "UID-"+ UUID.randomUUID();
+    }
 }

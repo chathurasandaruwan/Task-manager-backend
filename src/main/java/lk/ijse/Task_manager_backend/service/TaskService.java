@@ -6,7 +6,7 @@ import lk.ijse.Task_manager_backend.dto.impl.TaskDTO;
 import java.util.List;
 
 public interface TaskService {
-    void saveTask(TaskDTO taskDTO);
+    TaskDTO saveTask(TaskDTO taskDTO);
 
     List<TaskDTO> getAllTasks(String userId);
 

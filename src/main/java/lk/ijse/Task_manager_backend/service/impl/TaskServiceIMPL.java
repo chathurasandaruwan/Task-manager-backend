@@ -2,6 +2,7 @@ package lk.ijse.Task_manager_backend.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.Task_manager_backend.dao.TaskDAO;
+import lk.ijse.Task_manager_backend.dto.TaskStatus;
 import lk.ijse.Task_manager_backend.dto.impl.TaskDTO;
 import lk.ijse.Task_manager_backend.entity.impl.TaskEntity;
 import lk.ijse.Task_manager_backend.service.TaskService;
@@ -9,6 +10,8 @@ import lk.ijse.Task_manager_backend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +25,16 @@ public class TaskServiceIMPL implements TaskService {
     private Mapping mapping;
 
     @Override
-    public void saveTask(TaskDTO taskDTO) {
-        TaskEntity saveTask = taskDAO.save(mapping.toTaskEntity(taskDTO));
+    public TaskDTO saveTask(TaskDTO taskDTO) {
+        TaskEntity taskEntity = mapping.toTaskEntity(taskDTO);
+        taskEntity.setCreatedAt(LocalDate.now());
+        taskEntity.setUpdatedAt(LocalDate.now());
+
+        TaskEntity saveTask = taskDAO.save(taskEntity);
         if (saveTask == null) {
             throw new RuntimeException("Failed to save task");
         }
+        return mapping.toTaskDTO(saveTask);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class TaskServiceIMPL implements TaskService {
             byId.get().setTitle(taskDTO.getTitle());
             byId.get().setDescription(taskDTO.getDescription());
             byId.get().setStatus(taskDTO.getStatus());
-            byId.get().setUpdatedAt(taskDTO.getUpdatedAt());
+            byId.get().setUpdatedAt(LocalDate.now());
         }
     }
 
