@@ -45,6 +45,7 @@ public class AuthUserController {
         // call service layer
         return ResponseEntity.ok(authService.signIn(signIn));
     }
+
     //refresh token
     @PostMapping("refresh")
     public ResponseEntity<JWTAuthResponse> Token(@RequestParam("refreshToken") String refreshToken) {

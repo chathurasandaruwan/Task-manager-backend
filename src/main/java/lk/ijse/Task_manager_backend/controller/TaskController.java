@@ -28,10 +28,9 @@ public class TaskController {
     public ResponseEntity<TaskDTO> saveTask(@RequestBody TaskDTO taskDTO) {
         String id = AppUtil.generateTaskId();
         taskDTO.setTaskId(id);
-        System.out.println(id);
         try {
             //call service layer
-            TaskDTO newTask =taskService.saveTask(taskDTO);
+            TaskDTO newTask = taskService.saveTask(taskDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
         } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

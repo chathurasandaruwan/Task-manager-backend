@@ -47,7 +47,7 @@ public class TaskServiceIMPL implements TaskService {
         Optional<TaskEntity> byId = taskDAO.findById(taskId);
         if (!byId.isPresent()) {
             throw new RuntimeException("Task not found");
-        }else {
+        } else {
             taskDAO.deleteById(taskId);
         }
     }
@@ -57,7 +57,7 @@ public class TaskServiceIMPL implements TaskService {
         Optional<TaskEntity> byId = taskDAO.findById(taskId);
         if (!byId.isPresent()) {
             throw new RuntimeException("Task not found");
-        }else {
+        } else {
             byId.get().setTitle(taskDTO.getTitle());
             byId.get().setDescription(taskDTO.getDescription());
             byId.get().setStatus(taskDTO.getStatus());
@@ -70,7 +70,7 @@ public class TaskServiceIMPL implements TaskService {
         Optional<TaskEntity> byId = taskDAO.findById(id);
         if (!byId.isPresent()) {
             throw new RuntimeException("Task not found");
-        }else {
+        } else {
             return mapping.toTaskDTO(byId.get());
         }
     }

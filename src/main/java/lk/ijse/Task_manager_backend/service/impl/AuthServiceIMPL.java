@@ -22,6 +22,7 @@ public class AuthServiceIMPL implements AuthService {
     private final Mapping mapping;
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
+
     @Override
     public JWTAuthResponse signIn(SignIn signIn) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signIn.getEmail(), signIn.getPassword()));
